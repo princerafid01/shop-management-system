@@ -22,6 +22,12 @@ class UserController extends Controller
         session('email', null);
         redirect('/login');
 	}
+	public function getUser($id)
+	{
+		$data['user'] = User::find($id);
+		$data['roles'] = Role::all();
+		return view('user-edit',$data);
+	}
 	public function getAdd()
 	{
 		$this->checkauth();
@@ -75,6 +81,51 @@ class UserController extends Controller
 			}
 			if ($update_user) {
 				session('success',"User Created Successfully.");
+				redirect('/users');
+			}
+
+		}
+	}
+	public function postEdit()
+	{
+		$errors = [];
+		$fields = [];
+		$all_user = User::all();
+		
+		foreach ($_POST as $key => $value) {
+			if(!v::notEmpty()->validate($value)){
+				$errors[] = "Please fill the ".ucfirst($key)." field";
+			}
+		}
+		if(!v::alnum()->validate($_POST['name'])){
+			$errors[] = "Please enter a valid name"; 
+		} 
+		if(!v::email()->validate($_POST['email'])){
+			$errors[] = "Please enter a valid email"; 
+		}
+		if(!v::key('password', v::equals($_POST['password_confirmation']))->validate($_POST)){
+			$errors[] = "Password didn't match"; 
+		}
+		if ($errors) {
+		foreach ($_POST as $key => $value) {
+			$fields[$key] = $value;
+		}
+			session('fields',$fields);
+			session('errors',$errors);
+			redirect('/users/edit');
+		} else {
+			session('errors',NULL);
+			$user = User::find($_POST['id'])->update([
+				'name' => $_POST['name'],
+				'email' => $_POST['email'],
+				'role_id' => $_POST['role'],
+				'password' => password_hash($_POST['password'],PASSWORD_BCRYPT),
+			]);
+			$userex = Userextra::find(User::find($_POST['id'])->userextra_id)->update([
+				'phone' => $_POST['phone'],				
+			]);
+			if ($userex) {
+				session('success',"User updated Successfully.");
 				redirect('/users');
 			}
 

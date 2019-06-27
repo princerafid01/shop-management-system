@@ -46,7 +46,7 @@ require_once 'partials/preloader.php';
                 <td><?php echo \App\Models\Role::find($user->role_id)->title ?></td>
                 <td>
 
-                    <a href=""><i class="fa fa-edit" aria-hidden="true"></i></a>
+                    <a href="users/user/<?php echo $user->id; ?>"><i class="fa fa-edit" aria-hidden="true"></i></a>
 
                     <a href="javascript:void(0)" class="delete-item"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 </td>
