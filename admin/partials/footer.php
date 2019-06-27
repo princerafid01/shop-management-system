@@ -50,7 +50,7 @@
     <script src="../../assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
     <script src="../../dist/js/pages/dashboards/dashboard1.js"></script>
     <script type="text/javascript">
-        $("#example").DataTable();
+        $(".example").DataTable();
     </script>
 </body>
 
