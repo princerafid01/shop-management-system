@@ -1,0 +1,23 @@
+{
+    "name": "rafid/oms",
+    "authors": [
+        {
+            "name": "Rafid",
+            "email": "mahmudrafid02@gmail.com"
+        }
+    ],
+    "require": {
+        "phroute/phroute": "^2.1",
+        "illuminate/database": "^5.8",
+        "illuminate/validation": "^5.8",
+        "respect/validation": "^1.1"
+    },
+    "autoload": {
+        "files": [
+            "app/helpers/helpers.php"
+        ],
+    	"psr-4": {
+    		"App\\": "app/"
+    	}
+    }
+}
